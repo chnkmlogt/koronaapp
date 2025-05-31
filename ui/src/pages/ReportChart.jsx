@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react';
 import { Chart } from 'primereact/chart';
 import { Dropdown } from 'primereact/dropdown';
 import { Checkbox } from 'primereact/checkbox';
-import { Button } from 'primereact/button';
 import axios from 'axios';
 
 function ReportChart() {
