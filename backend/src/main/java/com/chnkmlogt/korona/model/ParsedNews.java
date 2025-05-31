@@ -1,4 +1,3 @@
-
 package com.chnkmlogt.korona.model;
 
 import org.springframework.data.annotation.Id;
@@ -17,24 +16,59 @@ public class ParsedNews {
     private int recovered;
     private String rawText;
 
-    public String getId() { return id; }
-    public void setId(String id) { this.id = id; }
+    public String getId() {
+        return id;
+    }
 
-    public String getCity() { return city; }
-    public void setCity(String city) { this.city = city; }
+    public void setId(String id) {
+        this.id = id;
+    }
 
-    public LocalDate getDate() { return date; }
-    public void setDate(LocalDate date) { this.date = date; }
+    public String getCity() {
+        return city;
+    }
 
-    public int getCases() { return cases; }
-    public void setCases(int cases) { this.cases = cases; }
+    public void setCity(String city) {
+        this.city = city;
+    }
 
-    public int getDeaths() { return deaths; }
-    public void setDeaths(int deaths) { this.deaths = deaths; }
+    public LocalDate getDate() {
+        return date;
+    }
 
-    public int getRecovered() { return recovered; }
-    public void setRecovered(int recovered) { this.recovered = recovered; }
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
 
-    public String getRawText() { return rawText; }
-    public void setRawText(String rawText) { this.rawText = rawText; }
+    public int getCases() {
+        return cases;
+    }
+
+    public void setCases(int cases) {
+        this.cases = cases;
+    }
+
+    public int getDeaths() {
+        return deaths;
+    }
+
+    public void setDeaths(int deaths) {
+        this.deaths = deaths;
+    }
+
+    public int getRecovered() {
+        return recovered;
+    }
+
+    public void setRecovered(int recovered) {
+        this.recovered = recovered;
+    }
+
+    public String getRawText() {
+        return rawText;
+    }
+
+    public void setRawText(String rawText) {
+        this.rawText = rawText;
+    }
 }

@@ -1,19 +1,10 @@
 package com.chnkmlogt.korona.service;
 
-import com.chnkmlogt.korona.model.ParsedNews;
 import com.chnkmlogt.korona.repository.ParsedNewsRepository;
 import com.chnkmlogt.korona.util.NewsParser;
-import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-
-import java.time.LocalDate;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.*;
 
 @SpringBootTest
 public class ParsedNewsServiceTest {
@@ -27,12 +18,12 @@ public class ParsedNewsServiceTest {
 
     @InjectMocks
     private ParsedNewsService parsedNewsService;
-/*
+    /*
 
-    */
+     */
 /**
-     * Test that the parseAndSave method correctly parses and saves a valid raw text.
-     *//*
+ * Test that the parseAndSave method correctly parses and saves a valid raw text.
+ *//*
 
     @Test
     void testParseAndSave_ValidRawText() {
@@ -65,8 +56,8 @@ public class ParsedNewsServiceTest {
 
     */
 /**
-     * Test that the parseAndSave method throws an exception when the parsed news is invalid.
-     *//*
+ * Test that the parseAndSave method throws an exception when the parsed news is invalid.
+ *//*
 
     @Test
     void testParseAndSave_InvalidParsedNews() {
@@ -91,8 +82,8 @@ public class ParsedNewsServiceTest {
 
     */
 /**
-     * Test that the repository is not called when the parsing logic fails.
-     *//*
+ * Test that the repository is not called when the parsing logic fails.
+ *//*
 
     @Test
     void testParseAndSave_ParsingFails() {

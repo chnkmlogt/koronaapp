@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 @Component
 public class CityPatternLoader {
 
-    private static Pattern cityPattern;
+    private static final Pattern cityPattern;
 
     static {
         try (InputStream is = CityPatternLoader.class.getResourceAsStream("/cities.txt");

@@ -1,4 +1,3 @@
-
 package com.chnkmlogt.korona.util;
 
 import com.chnkmlogt.korona.model.ParsedNews;
@@ -37,10 +36,12 @@ public class NewsParser {
         Matcher matcher = pattern.matcher(text);
         return matcher.find() ? matcher.group(1) : "";
     }
+
     private static Integer extractInt(Pattern pattern, String text) {
         Matcher matcher = pattern.matcher(text);
         return matcher.find() ? Integer.parseInt(matcher.group(1)) : 0;
     }
+
     private static LocalDate extractLocalDate(Pattern pattern, String text) {
         Matcher dateMatcher = pattern.matcher(text);
         if (dateMatcher.find()) {

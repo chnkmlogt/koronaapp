@@ -1,4 +1,3 @@
-
 package com.chnkmlogt.korona;
 
 import com.chnkmlogt.korona.model.ParsedNews;

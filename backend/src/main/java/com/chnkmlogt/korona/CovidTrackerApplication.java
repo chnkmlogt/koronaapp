@@ -1,4 +1,3 @@
-
 package com.chnkmlogt.korona;
 
 import org.springframework.boot.SpringApplication;
