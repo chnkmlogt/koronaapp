@@ -1,7 +1,7 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import NewsList from './pages/NewsList';
 import ReportChart from './pages/ReportChart';
 
@@ -13,10 +13,6 @@ ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <BrowserRouter>
       <div className="p-4">
-        <nav className="flex gap-4 mb-6">
-          <Link to="/" className="text-blue-600 underline">Haber Listesi</Link>
-          <Link to="/grafik" className="text-blue-600 underline">Rapor Grafik</Link>
-        </nav>
         <Routes>
           <Route path="/" element={<NewsList />} />
           <Route path="/grafik" element={<ReportChart />} />

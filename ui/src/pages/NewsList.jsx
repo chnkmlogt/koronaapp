@@ -4,8 +4,9 @@ import { Button } from 'primereact/button';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { Paginator } from 'primereact/paginator';
-import { Menu } from 'primereact/menu';
+import { Menubar } from 'primereact/menubar';
 import { Toast } from 'primereact/toast';
+import { Dialog } from 'primereact/dialog';
 import axios from 'axios';
 
 function NewsList() {
@@ -14,11 +15,14 @@ function NewsList() {
   const [first, setFirst] = useState(0);
   const [rows, setRows] = useState(20);
   const [totalRecords, setTotalRecords] = useState(0);
+  const [showDialog, setShowDialog] = useState(false);
+  const [showChartDialog, setShowChartDialog] = useState(false);
   const toast = useRef(null);
 
   const menuItems = [
-    { label: 'Haber Girişi', command: () => window.scrollTo({ top: 0, behavior: 'smooth' }) },
-    { label: 'Haber Tablosu', command: () => document.getElementById('haber-tablosu').scrollIntoView({ behavior: 'smooth' }) }
+    { label: 'Haber Girişi', command: () => setShowDialog(true) },
+    { label: 'Haber Tablosu', command: () => document.getElementById('haber-tablosu').scrollIntoView({ behavior: 'smooth' }) },
+    { label: 'Grafik Ekranı', command: () => setShowChartDialog(true) }
   ];
 
   const haberiKaydet = async () => {
@@ -28,6 +32,7 @@ function NewsList() {
         headers: { 'Content-Type': 'text/plain' }
       });
       setHaberMetni('');
+      setShowDialog(false);
       toast.current.show({ severity: 'success', summary: 'Başarılı', detail: 'Haber başarıyla kaydedildi.' });
       haberListesiniGetir();
     } catch (err) {
@@ -59,32 +64,41 @@ function NewsList() {
   return (
       <div className="p-4">
         <Toast ref={toast} />
+        <Menubar model={menuItems} className="mb-4" />
 
-        <h2 className="text-xl font-bold mb-4">Haber Girişi ve Listeleme</h2>
-
-        <div className="mb-4">
-          <Menu model={menuItems} />
-        </div>
-
-        <div className="mb-4">
+        <Dialog
+            header="Yeni Haber Girişi"
+            visible={showDialog}
+            style={{ width: '50vw' }}
+            onHide={() => setShowDialog(false)}
+            footer={
+              <div>
+                <Button label="İptal" icon="pi pi-times" onClick={() => setShowDialog(false)} className="p-button-text" />
+                <Button label="Kaydet" icon="pi pi-check" onClick={haberiKaydet} autoFocus />
+              </div>
+            }
+        >
           <InputTextarea
               value={haberMetni}
               onChange={(e) => setHaberMetni(e.target.value)}
-              rows={3}
+              rows={5}
               cols={60}
               placeholder="Yeni haber metni girin..."
               autoResize
           />
-          <Button
-              label="Haberi Gönder"
-              icon="pi pi-send"
-              onClick={haberiKaydet}
-              className="mt-2"
-          />
-        </div>
+        </Dialog>
+
+        <Dialog
+            header="Günlük Vaka, Vefat ve İyileşen Grafiği"
+            visible={showChartDialog}
+            style={{ width: '80vw', height: '80vh' }}
+            onHide={() => setShowChartDialog(false)}
+        >
+          <iframe src="/grafik" title="Grafik" style={{ width: '100%', height: '70vh', border: 'none' }} />
+        </Dialog>
 
         <div id="haber-tablosu">
-          <DataTable value={haberler} responsiveLayout="scroll">
+          <DataTable value={haberler} >
             <Column field="date" header="Tarih"></Column>
             <Column field="city" header="Şehir"></Column>
             <Column field="cases" header="Vaka"></Column>
