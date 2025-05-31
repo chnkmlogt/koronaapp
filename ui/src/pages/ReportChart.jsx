@@ -1,8 +1,10 @@
 
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import { Chart } from 'primereact/chart';
 import { Dropdown } from 'primereact/dropdown';
-import { Checkbox } from 'primereact/checkbox';
+import { InputSwitch } from 'primereact/inputswitch';
+import { Toast } from 'primereact/toast';
+
 import axios from 'axios';
 
 function ReportChart() {
@@ -12,6 +14,7 @@ function ReportChart() {
   const [sehirler, setSehirler] = useState([]);
   const [grafikTuru, setGrafikTuru] = useState("line");
   const [chartData, setChartData] = useState(null);
+  const toast = useRef(null);
 
   const grafikTurleri = [
     { label: 'Çizgi Grafiği', value: 'line' },
@@ -26,7 +29,7 @@ function ReportChart() {
       const res = await axios.get('/api/reports', { params });
       setGrafikVerisi(res.data);
     } catch (err) {
-      console.error('Grafik verisi alınamadı:', err);
+      toast.current.show({ severity: 'error', summary: 'Hata', detail: 'Grafik verisi alınamadı' });
     }
   };
 
@@ -35,7 +38,8 @@ function ReportChart() {
       const res = await axios.get('/api/cities');
       setSehirler(res.data.map(city => ({ label: city, value: city })));
     } catch (err) {
-      console.error('Şehir listesi alınamadı:', err);
+      toast.current.show({ severity: 'error', summary: 'Hata', detail: 'Şehir listesi alınamadı:'+ err });
+
     }
   };
 
@@ -86,8 +90,10 @@ function ReportChart() {
 
   return (
     <div className="p-4">
+      <Toast ref={toast} />
       <div className="flex flex-wrap gap-4 mb-4 items-center">
-        <Dropdown
+
+        <Dropdown showClear
           value={sehir}
           options={sehirler}
           onChange={(e) => setSehir(e.value)}
@@ -99,14 +105,16 @@ function ReportChart() {
           options={grafikTurleri}
           onChange={(e) => setGrafikTuru(e.value)}
           placeholder="Grafik Türü"
-          className="w-48"
+          className="w-60"
         />
 
-        <Checkbox
+
+        <InputSwitch
             inputId="kumulatif"
             checked={kumulatifMi}
-            onChange={(e) => setKumulatifMi(e.checked)}
+            onChange={(e) => setKumulatifMi(e.value)}
         />
+
         <label htmlFor="kumulatif">Kümülatif</label>
       </div>
 

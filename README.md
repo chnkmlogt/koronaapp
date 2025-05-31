@@ -49,4 +49,4 @@ Projenin Amacı: Açık kaynak haberlerden text halinde bilgilerin anahtar vaka 
 ## Kurulum
 1. MongoDB çalışır durumda olmalı
 2. `backend` klasöründe `mvn spring-boot:run`
-3. `ui` klasöründe `npm install && npm start`
+3. `ui` klasöründe `npm install && npm run dev`

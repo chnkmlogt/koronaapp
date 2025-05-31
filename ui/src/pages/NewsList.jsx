@@ -98,14 +98,16 @@ function NewsList() {
             </Dialog>
 
             <div id="haber-tablosu">
-                <DataTable value={haberler} responsiveLayout="scroll">
-                    <Column field="date" header="Tarih"></Column>
-                    <Column field="city" header="Şehir"></Column>
-                    <Column field="cases" header="Vaka"></Column>
-                    <Column field="deaths" header="Vefat"></Column>
+                <DataTable value={haberler} stripedRows responsiveLayout="scroll">
+                    <Column field="date" sortable header="Tarih"></Column>
+                    <Column field="city" sortable header="Şehir"></Column>
+                    <Column field="cases" sortable header="Vaka"></Column>
+                    <Column field="deaths" sortable header="Vefat"></Column>
                     <Column field="recovered" header="İyileşen"></Column>
                     <Column field="rawText" header="Haber Metni"></Column>
                 </DataTable>
+
+
 
                 <Paginator
                     first={first}
