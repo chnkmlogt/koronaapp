@@ -1,0 +1,43 @@
+# === Global ===
+.DS_Store
+Thumbs.db
+*.log
+*.tmp
+*.swp
+
+# === IntelliJ / VSCode ===
+.idea/
+*.iml
+.vscode/
+
+# === Backend (Spring Boot / Maven) ===
+backend/target/
+backend/.mvn/
+backend/mvnw
+backend/mvnw.cmd
+backend/*.log
+backend/*.class
+backend/*.jar
+backend/*.war
+backend/*.ear
+backend/application-local.properties
+backend/application-dev.properties
+backend/application-prod.properties
+
+# === Frontend (React + Vite) ===
+ui/node_modules/
+ui/dist/
+ui/.vite/
+ui/.env
+ui/.env.local
+ui/npm-debug.log*
+ui/yarn-debug.log*
+ui/yarn-error.log*
+ui/coverage/
+
+# === Test Output ===
+**/coverage/
+**/jest-coverage/
+
+# === MongoDB dump (if used locally) ===
+dump/
