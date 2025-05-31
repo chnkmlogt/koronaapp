@@ -87,7 +87,6 @@ function ReportChart() {
 
   return (
     <div className="p-4">
-      <h2 className="text-xl font-bold mb-4">COVID-19 Raporu</h2>
       <div className="flex flex-wrap gap-4 mb-4 items-center">
         <Dropdown
           value={sehir}
@@ -96,12 +95,6 @@ function ReportChart() {
           placeholder="Şehir seçin"
           className="w-60"
         />
-        <Checkbox
-          inputId="kumulatif"
-          checked={kumulatifMi}
-          onChange={(e) => setKumulatifMi(e.checked)}
-        />
-        <label htmlFor="kumulatif">Kümülatif</label>
         <Dropdown
           value={grafikTuru}
           options={grafikTurleri}
@@ -109,11 +102,22 @@ function ReportChart() {
           placeholder="Grafik Türü"
           className="w-48"
         />
-        <Button label="Yenile" icon="pi pi-refresh" onClick={grafikVerisiniGetir} />
+
+        <Checkbox
+            inputId="kumulatif"
+            checked={kumulatifMi}
+            onChange={(e) => setKumulatifMi(e.checked)}
+        />
+        <label htmlFor="kumulatif">Kümülatif</label>
       </div>
 
       <div className="card">
-        {chartData && <Chart type={grafikTuru} data={chartData} />}
+        {chartData && <Chart
+            type={grafikTuru}
+            data={chartData}
+            options={{ maintainAspectRatio: false }}
+            height="90vh"
+        />}
       </div>
     </div>
   );

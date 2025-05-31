@@ -10,116 +10,116 @@ import { Dialog } from 'primereact/dialog';
 import axios from 'axios';
 
 function NewsList() {
-  const [haberMetni, setHaberMetni] = useState('');
-  const [haberler, setHaberler] = useState([]);
-  const [first, setFirst] = useState(0);
-  const [rows, setRows] = useState(20);
-  const [totalRecords, setTotalRecords] = useState(0);
-  const [showDialog, setShowDialog] = useState(false);
-  const [showChartDialog, setShowChartDialog] = useState(false);
-  const toast = useRef(null);
+    const [haberMetni, setHaberMetni] = useState('');
+    const [haberler, setHaberler] = useState([]);
+    const [first, setFirst] = useState(0);
+    const [rows, setRows] = useState(10);
+    const [totalRecords, setTotalRecords] = useState(0);
+    const [showDialog, setShowDialog] = useState(false);
+    const [showChartDialog, setShowChartDialog] = useState(false);
+    const toast = useRef(null);
 
-  const menuItems = [
-    { label: 'Haber Girişi', command: () => setShowDialog(true) },
-    { label: 'Haber Tablosu', command: () => document.getElementById('haber-tablosu').scrollIntoView({ behavior: 'smooth' }) },
-    { label: 'Grafik Ekranı', command: () => setShowChartDialog(true) }
-  ];
+    const menuItems = [
+        { label: 'Haber Girişi', command: () => setShowDialog(true) },
+        { label: 'Haber Tablosu', command: () => document.getElementById('haber-tablosu').scrollIntoView({ behavior: 'smooth' }) },
+        { label: 'Grafik Ekranı', command: () => setShowChartDialog(true) }
+    ];
 
-  const haberiKaydet = async () => {
-    if (!haberMetni.trim()) return;
-    try {
-      await axios.post('/api/news', haberMetni, {
-        headers: { 'Content-Type': 'text/plain' }
-      });
-      setHaberMetni('');
-      setShowDialog(false);
-      toast.current.show({ severity: 'success', summary: 'Başarılı', detail: 'Haber başarıyla kaydedildi.' });
-      haberListesiniGetir();
-    } catch (err) {
-      toast.current.show({ severity: 'error', summary: 'Hata', detail: 'Haber gönderilemedi.' });
-    }
-  };
-
-  const haberListesiniGetir = async () => {
-    try {
-      const res = await axios.get('/api/news', {
-        params: {
-          page: first / rows,
-          size: rows
+    const haberiKaydet = async () => {
+        if (!haberMetni.trim()) return;
+        try {
+            await axios.post('/api/news', haberMetni, {
+                headers: { 'Content-Type': 'text/plain' }
+            });
+            setHaberMetni('');
+            setShowDialog(false);
+            toast.current.show({ severity: 'success', summary: 'Başarılı', detail: 'Haber başarıyla kaydedildi.' });
+            haberListesiniGetir();
+        } catch (err) {
+            toast.current.show({ severity: 'error', summary: 'Hata', detail: 'Haber gönderilemedi.' });
         }
-      });
-      const data = res.data;
-      const content = Array.isArray(data.content) ? data.content : data;
-      setHaberler(content);
-      setTotalRecords(data.totalElements || content.length);
-    } catch (err) {
-      toast.current.show({ severity: 'error', summary: 'Hata', detail: 'Haber listesi alınamadı.' });
-    }
-  };
+    };
 
-  useEffect(() => {
-    haberListesiniGetir();
-  }, [first, rows]);
+    const haberListesiniGetir = async () => {
+        try {
+            const res = await axios.get('/api/news', {
+                params: {
+                    page: first / rows,
+                    size: rows
+                }
+            });
+            const data = res.data;
+            const content = Array.isArray(data.content) ? data.content : data;
+            setHaberler(content);
+            setTotalRecords(data.totalElements || content.length);
+        } catch (err) {
+            toast.current.show({ severity: 'error', summary: 'Hata', detail: 'Haber listesi alınamadı.' });
+        }
+    };
 
-  return (
-      <div className="p-4">
-        <Toast ref={toast} />
-        <Menubar model={menuItems} className="mb-4" />
+    useEffect(() => {
+        haberListesiniGetir();
+    }, [first, rows]);
 
-        <Dialog
-            header="Yeni Haber Girişi"
-            visible={showDialog}
-            style={{ width: '50vw' }}
-            onHide={() => setShowDialog(false)}
-            footer={
-              <div>
-                <Button label="İptal" icon="pi pi-times" onClick={() => setShowDialog(false)} className="p-button-text" />
-                <Button label="Kaydet" icon="pi pi-check" onClick={haberiKaydet} autoFocus />
-              </div>
-            }
-        >
-          <InputTextarea
-              value={haberMetni}
-              onChange={(e) => setHaberMetni(e.target.value)}
-              rows={5}
-              cols={60}
-              placeholder="Yeni haber metni girin..."
-              autoResize
-          />
-        </Dialog>
+    return (
+        <div className="p-4">
+            <Toast ref={toast} />
+            <Menubar model={menuItems} className="mb-4" />
 
-        <Dialog
-            header="Günlük Vaka, Vefat ve İyileşen Grafiği"
-            visible={showChartDialog}
-            style={{ width: '80vw', height: '80vh' }}
-            onHide={() => setShowChartDialog(false)}
-        >
-          <iframe src="/grafik" title="Grafik" style={{ width: '100%', height: '70vh', border: 'none' }} />
-        </Dialog>
+            <Dialog
+                header="Yeni Haber Girişi"
+                visible={showDialog}
+                style={{ width: '50vw' }}
+                onHide={() => setShowDialog(false)}
+                footer={
+                    <div>
+                        <Button label="İptal" icon="pi pi-times" onClick={() => setShowDialog(false)} className="p-button-text" />
+                        <Button label="Kaydet" icon="pi pi-check" onClick={haberiKaydet} autoFocus />
+                    </div>
+                }
+            >
+                <InputTextarea
+                    value={haberMetni}
+                    onChange={(e) => setHaberMetni(e.target.value)}
+                    rows={5}
+                    cols={60}
+                    placeholder="Yeni haber metni girin..."
+                    autoResize
+                />
+            </Dialog>
 
-        <div id="haber-tablosu">
-          <DataTable value={haberler} >
-            <Column field="date" header="Tarih"></Column>
-            <Column field="city" header="Şehir"></Column>
-            <Column field="cases" header="Vaka"></Column>
-            <Column field="deaths" header="Vefat"></Column>
-            <Column field="recovered" header="İyileşen"></Column>
-            <Column field="rawText" header="Haber Metni"></Column>
-          </DataTable>
+            <Dialog
+                header="Günlük Vaka, Vefat ve İyileşen Grafiği"
+                visible={showChartDialog}
+                style={{ width: '80vw', height: '80vh' }}
+                onHide={() => setShowChartDialog(false)}
+            >
+                <iframe src="/grafik" title="Grafik" style={{ width: '100%', height: 'calc(100% - 3rem)', border: 'none' }} scrolling="no" />
+            </Dialog>
 
-          <Paginator
-              first={first}
-              rows={rows}
-              totalRecords={totalRecords}
-              onPageChange={(e) => {
-                setFirst(e.first);
-                setRows(e.rows);
-              }}
-              className="mt-4"
-          />
+            <div id="haber-tablosu">
+                <DataTable value={haberler} responsiveLayout="scroll">
+                    <Column field="date" header="Tarih"></Column>
+                    <Column field="city" header="Şehir"></Column>
+                    <Column field="cases" header="Vaka"></Column>
+                    <Column field="deaths" header="Vefat"></Column>
+                    <Column field="recovered" header="İyileşen"></Column>
+                    <Column field="rawText" header="Haber Metni"></Column>
+                </DataTable>
+
+                <Paginator
+                    first={first}
+                    rows={rows}
+                    totalRecords={totalRecords}
+                    onPageChange={(e) => {
+                        setFirst(e.first);
+                        setRows(e.rows);
+                    }}
+                    className="mt-4"
+                />
+            </div>
         </div>
-      </div>
-  );
+    );
 }
 
 export default NewsList;
