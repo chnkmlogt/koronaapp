@@ -35,12 +35,12 @@ public class NewsParserTest {
 
     @Test
     public void testParseWithoutRecovered() {
-        String text = "20.04.2020 tarihinde Adana'da Korona salgınında 50 yeni vaka ve 5 kişi vefat etti.";
+        String text = "03.07.2026 tarihinde Adana'da 153 kişide korona tespit edildi. 90 hasta vefat etti.";
         ParsedNews parsed = NewsParser.parse(text);
         assertEquals("Adana", parsed.getCity());
-        assertEquals(LocalDate.of(2020, 4, 20), parsed.getDate());
-        assertEquals(50, parsed.getCases());
-        assertEquals(5, parsed.getDeaths());
+        assertEquals(LocalDate.of(2026, 7, 3), parsed.getDate());
+        assertEquals(153, parsed.getCases());
+        assertEquals(90, parsed.getDeaths());
         assertEquals(0, parsed.getRecovered());
     }
 

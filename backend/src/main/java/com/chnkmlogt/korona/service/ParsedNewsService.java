@@ -23,6 +23,12 @@ public class ParsedNewsService {
 
     public ParsedNews parseAndSave(String rawText) {
         ParsedNews parsed = NewsParser.parse(rawText);
+        //  tarih, şehir olmadan mongoya yazma
+        if (parsed == null ||
+                parsed.getCity() == null || parsed.getCity().isBlank() ||
+                parsed.getDate() == null ) {
+            return null;
+        }
         return repository.save(parsed);
     }
 
