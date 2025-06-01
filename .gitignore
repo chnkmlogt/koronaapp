@@ -28,7 +28,7 @@ backend/application-prod.properties
 ui/node_modules/
 ui/dist/
 ui/.vite/
-ui/.env
+ui/.env.production
 ui/.env.local
 ui/npm-debug.log*
 ui/yarn-debug.log*
