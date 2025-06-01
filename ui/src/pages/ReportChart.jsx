@@ -26,7 +26,7 @@ function ReportChart() {
       const params = {};
       if (sehir) params.city = sehir;
       if (kumulatifMi) params.cumulative = true;
-      const res = await axios.get('/api/reports', { params });
+      const res = await axios.get(`${import.meta.env.VITE_API_URL}/reports`, { params });
       setGrafikVerisi(res.data);
     } catch (err) {
       toast.current.show({ severity: 'error', summary: 'Hata', detail: 'Grafik verisi alınamadı' });
@@ -35,7 +35,7 @@ function ReportChart() {
 
   const sehirListesiniGetir = async () => {
     try {
-      const res = await axios.get('/api/cities');
+      const res = await axios.get(`${import.meta.env.VITE_API_URL}/cities`);
       setSehirler(res.data.map(city => ({ label: city, value: city })));
     } catch (err) {
       toast.current.show({ severity: 'error', summary: 'Hata', detail: 'Şehir listesi alınamadı:'+ err });

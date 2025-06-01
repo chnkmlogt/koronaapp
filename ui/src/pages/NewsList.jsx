@@ -28,7 +28,7 @@ function NewsList() {
     const haberiKaydet = async () => {
         if (!haberMetni.trim()) return;
         try {
-            await axios.post('/api/news', haberMetni, {
+            await axios.post(`${import.meta.env.VITE_API_URL}/news`, haberMetni, {
                 headers: { 'Content-Type': 'text/plain' }
             });
             setHaberMetni('');
@@ -42,7 +42,7 @@ function NewsList() {
 
     const haberListesiniGetir = async () => {
         try {
-            const res = await axios.get('/api/news', {
+            const res = await axios.get(`${import.meta.env.VITE_API_URL}/news`, {
                 params: {
                     page: first / rows,
                     size: rows
